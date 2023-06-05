@@ -39,7 +39,7 @@ app.post('/upload', upload.single('photo'), (req, res) => {
   res.send('File uploaded successfully!');
 });
 
-const port = process.env.PORT || 6000;
+const port = process.env.PORT || 6002;
 
 app.get('/', (req,res)=> res.send(`App is running from port : ${port}`  ))
 
