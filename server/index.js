@@ -40,6 +40,10 @@ app.post('/upload', upload.single('photo'), (req, res) => {
 });
 
 const port = process.env.PORT || 6000;
+
+app.get('/', (req,res)=> res.send(`App is running from port : ${port}`  ))
+
+
 app.listen(port, () => {
   console.log(`Server is running on port ${port}`);
 });
