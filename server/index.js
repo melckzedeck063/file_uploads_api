@@ -38,9 +38,9 @@ if (process.env.NODE_ENV === "development") {
     fileFilter : multerFilter
  })
 
-app.post('/upload', upload.single('photo'), (req, res) => {
-  // Process the uploaded file
-  const path =  req.file.path;
+app.post('/api/v1/posts/upload_photo', upload.single('photo'), (req, res) => {
+
+    const path =  req.file.path;
     if(!path || path === undefined){
        console.log("something went wrong")
     }
@@ -50,7 +50,9 @@ app.post('/upload', upload.single('photo'), (req, res) => {
         message : "photo uploaded succesfully",
         data : path
      })
-});
+   });
+
+ app.use('/uploads', express.static('uploads'));
 
 const port = process.env.PORT || 6002;
 
