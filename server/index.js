@@ -1,14 +1,19 @@
 const express = require('express');
 const multer = require('multer');
 const path =  require('path');
+const morgan = require('morgan')
 
 const app = express();
 // const upload = multer({ dest: 'uploads/' });
   //const upload = multer({ dest: 'uploads/posts' });
 
+if (process.env.NODE_ENV === "development") {
+    app.use(morgan('dev'))
+}
+
  const  multerStorage =  multer.diskStorage({
      destination :  (req,file,cb) => {
-         cb(null, './uploads');
+         cb(null, './uploads/posts');
      },
      filename : (req,file,cb) => {
          console.log(file)
@@ -35,8 +40,16 @@ const app = express();
 
 app.post('/upload', upload.single('photo'), (req, res) => {
   // Process the uploaded file
-  console.log(req.file); // Access the uploaded file information
-  res.send('File uploaded successfully!');
+  const path =  req.file.path;
+    if(!path || path === undefined){
+       console.log("something went wrong")
+    }
+
+    res.status(201).json({
+         status : "successfull",
+        message : "photo uploaded succesfully",
+        data : path
+     })
 });
 
 const port = process.env.PORT || 6002;
